@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://futurenowahead.in/sitemap.xml
