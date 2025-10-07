@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML & CSS Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 700px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .options label {
+      display: block;
+      margin: 0.5rem 0;
+      cursor: pointer;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    #result {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+    }
+
+    #timer {
+      font-weight: bold;
+      color: #d9534f;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <div class="header">
+      <div><strong>HTML & CSS Quiz</strong></div>
+      <div>Time Left: <span id="timer">6:00</span></div>
+    </div>
+    <div id="quiz">
+      <div class="question" id="question">Question text</div>
+      <div class="options">
+        <label><input type="radio" name="option" value="0"> <span id="option0"></span></label>
+        <label><input type="radio" name="option" value="1"> <span id="option1"></span></label>
+        <label><input type="radio" name="option" value="2"> <span id="option2"></span></label>
+        <label><input type="radio" name="option" value="3"> <span id="option3"></span></label>
+      </div>
+      <button class="btn" onclick="nextQuestion()">Next</button>
+      <div id="result"></div>
+    </div>
+  </div>
+<footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #333; color: white; text-align: center; padding: 0.8rem 0; font-size: 0.9rem;">
+  <p>&copy; 2025 - Ismail N</p>
+</footer>
+  <script>
+// Level 1: Beginner
+const quizData = [
+// JavaScript Basics
+{question:"Which keyword is used to declare a variable in JavaScript?",options:["var","let","const","All of the above"],answer:3},
+{question:"Which operator is used to assign a value?",options:["=","==","===","=>"],answer:0},
+{question:"What will 'typeof null' return in JavaScript?",options:["'null'","'object'","'undefined'","'boolean'"],answer:1},
+{question:"Which of the following is NOT a loop in JavaScript?",options:["for","while","foreach","loop"],answer:3},
+{question:"Which statement is used to make decisions in JavaScript?",options:["if","for","switch","function"],answer:0},
+{question:"What is the output of: 2 + '2'?",options:["4","22","NaN","Error"],answer:1},
+{question:"Which keyword is used to define a function in JavaScript?",options:["func","def","function","method"],answer:2},
+{question:"What is an array in JavaScript?",options:["A special type of object","A method","A loop","A string"],answer:0},
+{question:"How do you access the first element of an array?",options:["arr(0)","arr[1]","arr[0]","arr.first()"],answer:2},
+{question:"Which method adds a new element to the end of an array?",options:["push()","pop()","shift()","unshift()"],answer:0},
+
+// CSS Questions (unchanged from your original code)
+{question:"What does CSS stand for?",options:["Colorful Style Sheets","Creative Style Sheets","Cascading Style Sheets","Computer Style Sheets"],answer:2},
+{question:"Which property is used to change text color?",options:["font-color","text-style","color","text-color"],answer:2},
+{question:"How do you write a comment in CSS?",options:["/* comment */","// comment","# comment","<!-- comment -->"],answer:0},
+{question:"How do you center align text in CSS?",options:["text-align: center;","align: center;","center: text;","text: center;"],answer:0},
+{question:"What does the <title> tag do?",options:["Sets the page's title in browser tab","Adds a tooltip","Creates a heading","Nothing"],answer:0},
+{question:"Which symbol is used for class selector in CSS?",options:[".","#","$","&"],answer:0},
+{question:"Which CSS property is used to make rounded corners?",options:["border-radius","corner-radius","round-corner","radius"],answer:0},
+{question:"Which CSS unit is relative to the font-size of the element?",options:["em","px","%","pt"],answer:0},
+{question:"Which CSS property is used for shadow around a box?",options:["box-shadow","shadow","border-shadow","outline-shadow"],answer:0},
+{question:"Which property controls the size of text?",options:["text-size","font-size","font-style","text-style"],answer:1},
+{question:"Which input type allows multiple lines of text?",options:["text","textarea","paragraph","multitext"],answer:1},
+{question:"How do you underline text in CSS?",options:["text-decoration: underline;","font-style: underline;","text-align: underline;","underline: true;"],answer:0},
+{question:"How to select an element with id 'header' in CSS?",options:["#header",".header","header","*header"],answer:0},
+{question:"What is the correct HTML tag to make text bold?",options:["<strong>","<b>","Both A and B","<bold>"],answer:2},
+{question:"What tag is used to embed CSS in HTML?",options:["<css>","<style>","<script>","<link>"],answer:1},
+{question:"Which selector selects all <p> elements?",options:["p","*","#p",".p"],answer:0},
+{question:"Which property sets the width of an element?",options:["width","size","element-width","length"],answer:0},
+{question:"Which tag is used to create a table in HTML?",options:["<table>","<tab>","<tb>","<tr>"],answer:0},
+{question:"Which tag represents a navigation section?",options:["<nav>","<navigate>","<menu>","<header>"],answer:0},
+{question:"What does <thead> tag define?",options:["Table header","HTML header","Top row","None of the above"],answer:0},
+
+// Advanced CSS + JS Concepts
+{question:"Which pseudo-class targets the first child element of its parent?",options:[":first-child",":first",":child-first",":nth-child(1)"],answer:0},
+{question:"Which value of position property makes an element stay in place when scrolling?",options:["fixed","absolute","sticky","relative"],answer:0},
+{question:"Which media query is used for screen widths below 600px?",options:["@media (max-width: 600px)","@media (min-width: 600px)","@media screen and (width < 600px)","@media below 600px"],answer:0},
+{question:"Which HTML5 tag is used to define a self-contained piece of content?",options:["<section>","<article>","<aside>","<div>"],answer:1},
+{question:"Which CSS function is used to apply a transformation like rotation?",options:["transform","transition","rotate","translate"],answer:0},
+{question:"Which tag is used for embedding external content like PDFs?",options:["<iframe>","<embed>","<object>","All of the above"],answer:3},
+{question:"What is the purpose of the z-index property in CSS?",options:["Set layering of elements","Zoom level","Set opacity","Apply filters"],answer:0},
+{question:"Which input type is used to select a date?",options:["date","datetime","calendar","time"],answer:0},
+{question:"How do you apply styles to only screen devices?",options:["@media screen","media=\"screen\"","@media only screen","@media device=screen"],answer:2},
+{question:"What is the default display value of <div> in HTML?",options:["block","inline","flex","grid"],answer:0}
+];
+
+
+     let currentQuestion = 0;
+  let score = 0;
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let timerDuration = 600; // 10 minutes
+  let timerInterval;
+  let userAnswers = [];
+
+  function loadQuestion() {
+    const q = quizData[currentQuestion];
+    document.getElementById("question").textContent = `Q${currentQuestion + 1}. ${q.question}`;
+    q.options.forEach((opt, index) => {
+      const span = document.getElementById("option" + index);
+      span.textContent = opt;
+      const input = span.previousElementSibling;
+      input.disabled = false;
+      input.checked = false;
+      span.style.color = "black";
+      span.style.fontWeight = "normal";
+    });
+    document.querySelector(".btn").textContent = "Submit";
+  }
+
+  function nextQuestion() {
+    const selectedInput = document.querySelector('input[name="option"]:checked');
+    if (!selectedInput) {
+      alert("Please select an option.");
+      return;
+    }
+
+    const selectedValue = parseInt(selectedInput.value);
+    const correctIndex = quizData[currentQuestion].answer;
+
+    // Highlight answers
+    quizData[currentQuestion].options.forEach((_, i) => {
+      const span = document.getElementById("option" + i);
+      if (i === correctIndex) {
+        span.style.color = "green";
+        span.style.fontWeight = "bold";
+      }
+      if (i === selectedValue && i !== correctIndex) {
+        span.style.color = "red";
+        span.style.fontWeight = "bold";
+      }
+      span.previousElementSibling.disabled = true;
+    });
+
+       const isCorrect = selectedValue === correctIndex;
+    // Record user answer
+userAnswers.push({
+  question: quizData[currentQuestion].question,
+  options: quizData[currentQuestion].options,
+  correct: quizData[currentQuestion].answer,
+  selected: selectedValue,
+  isCorrect: selectedValue === quizData[currentQuestion].answer
+});
+
+    if (isCorrect) {
+      score++;
+      correctAnswers++;
+    } else {
+      wrongAnswers++;
+    }
+
+
+    // Change button text for last question
+    document.querySelector(".btn").textContent =
+      currentQuestion === quizData.length - 1 ? "Finish" : "Next";
+
+    // Set timeout before moving on
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        endQuiz();
+      }
+    }, 1000);
+  }
+
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      timerDuration--;
+      let minutes = Math.floor(timerDuration / 60);
+      let seconds = timerDuration % 60;
+      document.getElementById("timer").textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (timerDuration <= 0) {
+        clearInterval(timerInterval);
+        endQuiz(true);
+      }
+    }, 1000);
+  }
+
+function endQuiz(timeout = false) {
+  clearInterval(timerInterval);
+  const message = timeout ? "⏰ Time's up!" : "✅ Quiz Completed!";
+  let detailedResult = '';
+
+  userAnswers.forEach((ans, i) => {
+    const correctText = ans.options[ans.correct] || "N/A";
+    const selectedText = typeof ans.selected === "number" ? ans.options[ans.selected] : "No Answer Selected";
+    const statusIcon = ans.isCorrect ? "✅" : "❌";
+
+    detailedResult += `
+      <div style="margin-top: 1rem; padding: 10px; border-bottom: 1px solid #ddd;">
+        <strong>Q${i + 1}: ${ans.question}</strong><br/>
+        ${statusIcon} <strong>Correct Answer:</strong> ${correctText}<br/>
+        ${ans.isCorrect ? "" : `❌ <strong>Your Answer:</strong> ${selectedText}<br/>`}
+      </div>
+    `;
+  });
+
+  document.getElementById("quiz").innerHTML = `
+    <h2>${message}</h2>
+    <p><strong>Your Score:</strong> ${score} / ${quizData.length}</p>
+    <p>✅ Correct Answers: ${correctAnswers}</p>
+    <p>❌ Wrong Answers: ${wrongAnswers}</p>
+    <hr/>
+    <h3>📝 Detailed Review:</h3>
+    <div style="max-height: 400px; overflow-y: auto;">${detailedResult}</div>
+  `;
+}
+
+  loadQuestion();
+  startTimer();
+  </script>
+
+</body>
+</html>
